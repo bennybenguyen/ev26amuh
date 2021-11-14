@@ -1,23 +1,31 @@
 import numpy as np
+import ipywidgets as IWG
 from ipywidgets import interact, fixed
 from PIL import Image
+import matplotlib.pyplot as plt
 
 # Beispielbild erstellen
-width = 256
-height = 256
-
-array = np.zeros([height, width, 3], dtype=np.uint8)
-array[:, :128] = [255, 128, 0]  # fill img orange left side, howto: https://pythoninformer.com/python-libraries/numpy/numpy-and-images/
-array[:, 128:] = [0, 0, 255]  # Blue right side
+#width = 256
+#height = 256
+#array = np.zeros([height, width, 3], dtype=np.uint8)
+#array[:, :128] = [1, 0.5, 0]
+#array[:, 128:] = [0, 0, 1]  # Blue right side
 
 
 def imshow(X, resize=None):
-    # resize funktion von pillow https://www.geeksforgeeks.org/python-pil-image-resize-method/
-    newsize = (300, 300)
-    resized_img = X.resize(newsize)
-    # imshowmit resize
-    X.imshow()
-    pass
+    im = Image.fromarray(np.uint8(X * 255))  # make np array PIL Object
+    # resize function von pillow
+    if resize != None:
+        resized_img = im.resize(resize)
+        plt.figure()
+        plt.imshow(resized_img)
+        plt.show()
+        return resized_img
+    else:
+        plt.figure()
+        plt.imshow(im)
+        plt.show()
+        return im
 
 
-#imshow(array, 0)
+#imshow(array, (array.shape[0] // 2, array.shape[1] // 2)) # / float // integer division
